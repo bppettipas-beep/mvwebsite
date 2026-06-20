@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store — MostlyVanilla</title>
+  <meta name="description" content="Support MostlyVanilla. Browse available ranks and open a Discord ticket to purchase." />
+  <link rel="icon" type="image/png" href="server-icon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Purchase Modal ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,.18);
+      animation: modalIn .2s var(--ease) both;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(.96) translateY(8px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      border: none; background: var(--surface);
+      border-radius: 8px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      transition: background 160ms, color 160ms;
+    }
+    .modal-close:hover { background: var(--border); color: var(--text); }
+
+    .modal-rank-label {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 12px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+    }
+    .modal-rank-label.vanilla  { background: #f0e8d0; color: #7a6035; }
+    .modal-rank-label.vanillaplus { background: var(--green-100); color: var(--green-700); }
+
+    .modal h3 { font-size: 1.3rem; margin-bottom: 24px; }
+
+    .modal-steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+    .modal-step { display: flex; gap: 14px; align-items: flex-start; }
+    .modal-step-num {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      background: var(--green-600);
+      color: #fff;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .modal-step-title { font-weight: 700; font-size: .9rem; margin-bottom: 2px; }
+    .modal-step-desc { font-size: .83rem; color: var(--text-muted); line-height: 1.55; }
+
+    .modal-note {
+      font-size: .78rem;
+      color: var(--text-subtle);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .modal { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="index.html"><img src="server-icon.png" alt="MostlyVanilla" class="nav-logo" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="rules.html">Rules</a></li>
+        <li><a href="store.html">Store</a></li>
+      </ul>
+      <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord nav-discord-btn">Discord</a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile" id="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="index.html#features">Features</a>
+    <a href="rules.html">Rules</a>
+    <a href="store.html">Store</a>
+    <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" style="color:#5865f2">Discord</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="divider"></div>
+      <h1>Support MostlyVanilla</h1>
+      <p>Your support keeps the server running. Every purchase goes directly into hosting, development, and keeping the lights on.</p>
+    </div>
+  </section>
+
+  <!-- SALE BANNER -->
+  <section style="background:linear-gradient(135deg,#78350f,#92400e);padding:26px 0">
+    <div class="container" style="text-align:center">
+      <div style="display:inline-block;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:99px;padding:3px 14px;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fde68a;margin-bottom:8px">Limited Time</div>
+      <div style="font-size:clamp(1.4rem,4vw,2.1rem);font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:4px">Father&rsquo;s Day Sale &mdash; 40% OFF</div>
+      <div style="font-size:.9rem;color:#fde68a;font-weight:500">Everything in the store is 40% off. Thank you for supporting MostlyVanilla!</div>
+    </div>
+  </section>
+
+  <!-- RANKS -->
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Donor Ranks</span>
+      <h2 style="margin-top:12px;margin-bottom:12px">Choose your rank.</h2>
+      <p style="max-width:500px;margin-bottom:48px">Daily crate keys, extra homes, AFK zone perks, and a unique in-game rank. Click to purchase.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:860px">
+
+        <!-- Vanilla rank -->
+        <div style="background:#fdf8ee;border:2px solid #e8dfc5;border-radius:var(--radius-lg);padding:32px;position:relative;overflow:hidden;display:flex;flex-direction:column">
+          <div style="position:absolute;top:0;right:0;width:180px;height:180px;background:radial-gradient(circle at top right,rgba(245,240,220,.8),transparent 70%);pointer-events:none"></div>
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#92784a;background:#f0e8d0;border-radius:99px;display:inline-block;padding:3px 12px;margin-bottom:12px">Rank</div>
+          <div style="font-size:2rem;font-weight:900;color:#7a6035;letter-spacing:-.03em;margin-bottom:4px">Vanilla</div>
+          <!-- Price -->
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:20px">
+            <span style="font-size:1.6rem;font-weight:900;color:#3d2e10">$12</span>
+            <span style="font-size:.85rem;color:#b09060;text-decoration:line-through">$20</span>
+            <span style="font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
+          </div>
+          <!-- Perks -->
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1">
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">Daily Diamond Key &times;1</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">Daily Iron Keys &times;3</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">3 Extra Home Slots</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">Exclusive In-Game Rank &amp; Tag</span>
+            </div>
+          </div>
+          <div style="font-size:.75rem;color:#b09060;margin-bottom:14px">Keys &amp; perks refresh every 24 hours</div>
+          <button onclick="openModal('vanilla')" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 22px;background:#7a6035;color:#fff;border:none;border-radius:var(--radius);font-size:.9rem;font-weight:700;cursor:pointer;transition:background 180ms,transform 180ms" onmouseover="this.style.background='#5c4827';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#7a6035';this.style.transform=''">
+            Purchase Vanilla &rarr;
+          </button>
+        </div>
+
+        <!-- Vanilla+ rank -->
+        <div style="background:linear-gradient(145deg,#fdf8ee 0%,#f0fdf4 55%,#dcfce7 100%);border:2px solid #86efac;border-radius:var(--radius-lg);padding:32px;position:relative;overflow:hidden;display:flex;flex-direction:column">
+          <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(circle at top right,rgba(34,197,94,.14),transparent 70%);pointer-events:none"></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-700);background:var(--green-100);border-radius:99px;display:inline-block;padding:3px 12px">Rank</div>
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--green-600);border-radius:99px;display:inline-block;padding:3px 12px">Best Value</div>
+          </div>
+          <div style="font-size:2rem;font-weight:900;letter-spacing:-.03em;margin-bottom:4px;background:linear-gradient(135deg,#7a6035,#16a34a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Vanilla+</div>
+          <!-- Price -->
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:20px">
+            <span style="font-size:1.6rem;font-weight:900;color:#0f172a">$15</span>
+            <span style="font-size:.85rem;color:var(--text-subtle);text-decoration:line-through">$25</span>
+            <span style="font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
+          </div>
+          <!-- Perks -->
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1">
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#0f172a;font-weight:600">Daily Netherite Key &times;1</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#0f172a;font-weight:600">Daily Diamond Keys &times;3</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#0f172a;font-weight:600">5 AFK Zone Shards per session</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#0f172a;font-weight:600">8 Extra Home Slots</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
+              <span style="font-size:.875rem;color:#0f172a;font-weight:600">Exclusive In-Game Rank &amp; Tag</span>
+            </div>
+          </div>
+          <div style="font-size:.75rem;color:var(--text-subtle);margin-bottom:14px">Keys &amp; perks refresh every 24 hours</div>
+          <button onclick="openModal('vanilla+')" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 22px;background:var(--green-600);color:#fff;border:none;border-radius:var(--radius);font-size:.9rem;font-weight:700;cursor:pointer;transition:background 180ms,transform 180ms,box-shadow 180ms" onmouseover="this.style.background='#15803d';this.style.transform='translateY(-1px)';this.style.boxShadow='var(--shadow-green)'" onmouseout="this.style.background='var(--green-600)';this.style.transform='';this.style.boxShadow=''">
+            Purchase Vanilla+ &rarr;
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BITS -->
+  <section class="section section-alt">
+    <div class="container">
+      <span class="section-label">In-Game Currency</span>
+      <h2 style="margin-top:12px;margin-bottom:12px">Buy Bits.</h2>
+      <p style="max-width:500px;margin-bottom:48px">Bits are the server&rsquo;s in-game currency. Use them on the Auction House, trading, and more. Prices shown include the 40% sale discount.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:860px">
+
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
+          <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">100 Bits</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$0.60</div>
+          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$1.00</div>
+          <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
+        </div>
+
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
+          <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">500 Bits</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$2.40</div>
+          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$4.00</div>
+          <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
+        </div>
+
+        <div style="background:#fff;border:2px solid var(--green-500);border-radius:var(--radius-lg);padding:22px 20px;position:relative;box-shadow:var(--shadow-green);transition:box-shadow 200ms,transform 200ms" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+          <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--green-600);color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 12px;border-radius:99px;white-space:nowrap">Most Popular</div>
+          <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">1,000 Bits</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$4.80</div>
+          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$8.00</div>
+          <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
+        </div>
+
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
+          <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">2,000 Bits</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$9.00</div>
+          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$15.00</div>
+          <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
+        </div>
+
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
+          <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">5,000 Bits</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$24.00</div>
+          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$40.00</div>
+          <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
+        </div>
+
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
+          <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">10,000 Bits</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$45.00</div>
+          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$75.00</div>
+          <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PURCHASE MODAL -->
+  <div class="modal-backdrop" id="modal-backdrop" onclick="handleBackdropClick(event)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <span class="modal-rank-label" id="modal-rank-label">Rank</span>
+      <h3 id="modal-title">How to Purchase</h3>
+
+      <div class="modal-steps">
+        <div class="modal-step">
+          <div class="modal-step-num">1</div>
+          <div>
+            <div class="modal-step-title">Join our Discord</div>
+            <div class="modal-step-desc">If you haven&rsquo;t already, join the MostlyVanilla Discord server using the button below.</div>
+          </div>
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-num">2</div>
+          <div>
+            <div class="modal-step-title">Open a ticket</div>
+            <div class="modal-step-desc">Head to <strong>#tickets</strong> and open a support ticket. Tell us which rank you want and your in-game username.</div>
+          </div>
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-num">3</div>
+          <div>
+            <div class="modal-step-title">Pay &amp; receive</div>
+            <div class="modal-step-desc">A staff member will send you a PayPal invoice. Pay by card or PayPal — no account needed. Your rank is applied instantly after payment.</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-lg" style="width:100%;justify-content:center">
+        Open a Ticket on Discord
+      </a>
+      <p class="modal-note">No PayPal account needed &mdash; pay directly by card.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="rules.html">Rules</a></li>
+        <li><a href="store.html">Store</a></li>
+        <li><a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer">Discord</a></li>
+      </ul>
+      <p class="footer-copy">mostlyvanilla.net &nbsp;&bull;&nbsp; 1.21.1 Vanilla Survival &nbsp;&bull;&nbsp; &copy; 2026 MostlyVanilla</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function openModal(type) {
+      const backdrop = document.getElementById('modal-backdrop');
+      const label = document.getElementById('modal-rank-label');
+      const title = document.getElementById('modal-title');
+      if (type === 'vanilla+') {
+        label.textContent = 'Vanilla+';
+        label.className = 'modal-rank-label vanillaplus';
+        title.textContent = 'Purchasing Vanilla+';
+      } else if (type === 'bits') {
+        label.textContent = 'Bits';
+        label.className = 'modal-rank-label vanillaplus';
+        title.textContent = 'Purchasing Bits';
+      } else {
+        label.textContent = 'Vanilla';
+        label.className = 'modal-rank-label vanilla';
+        title.textContent = 'Purchasing Vanilla';
+      }
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal-backdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target === document.getElementById('modal-backdrop')) closeModal();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
