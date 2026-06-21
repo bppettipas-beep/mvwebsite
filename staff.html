@@ -8,16 +8,17 @@
   <link rel="icon" type="image/png" href="server-icon.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .badge-manager  { background: #ede9fe; color: #5b21b6; }
-    .badge-srhelper { background: #ccfbf1; color: #0d9488; }
-    .badge-staff    { background: #f1f5f9; color: #475569; }
+    .badge-manager   { background: #ede9fe; color: #5b21b6; }
+    .badge-srhelper  { background: #ccfbf1; color: #0d9488; }
+    .badge-community { background: #fff7ed; color: #c2410c; }
+    .badge-loa       { background: #f1f5f9; color: #64748b; }
 
     .staff-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 18px;
     }
-    @media (max-width: 860px) { .staff-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 960px) { .staff-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 520px)  { .staff-grid { grid-template-columns: 1fr; } }
 
     .sm-card {
@@ -32,11 +33,23 @@
     }
     .sm-card:hover { border-color: var(--border-green); box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
+    .sm-card-join {
+      background: var(--bg-alt);
+      border: 1.5px dashed var(--border-green);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      min-height: 200px;
+    }
+
     .sm-avatar {
       position: relative;
       width: 68px; height: 68px;
-      border-radius: 14px;
-      overflow: visible;
       margin-bottom: 16px;
       flex-shrink: 0;
     }
@@ -50,13 +63,12 @@
       display: block;
     }
 
-    /* Bedrock edition badge */
     .bedrock-tag {
       position: absolute;
       bottom: -5px; right: -5px;
       background: #0ea5e9;
       color: #fff;
-      font-size: .58rem;
+      font-size: .56rem;
       font-weight: 800;
       letter-spacing: .04em;
       text-transform: uppercase;
@@ -67,8 +79,8 @@
       white-space: nowrap;
     }
 
-    .sm-role { margin-bottom: 8px; }
-    .sm-name { font-size: 1.05rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
+    .sm-roles { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+    .sm-name  { font-size: 1.05rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
 
     .sm-tz {
       display: inline-flex;
@@ -137,12 +149,12 @@
     <div class="container">
       <div class="staff-grid">
 
-        <!-- GooseWithAK — Owner -->
+        <!-- 1. GooseWithAK — Owner -->
         <div class="sm-card">
           <div class="sm-avatar">
             <img src="https://minotar.net/avatar/GooseWithAK/64" alt="GooseWithAK" onerror="this.src='https://minotar.net/avatar/steve/64'" />
           </div>
-          <div class="sm-role"><span class="role-badge badge-owner">Owner</span></div>
+          <div class="sm-roles"><span class="role-badge badge-owner">Owner</span></div>
           <div class="sm-name">GooseWithAK</div>
           <div class="sm-tz">
             <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -155,12 +167,12 @@
           </div>
         </div>
 
-        <!-- Frxchozen — Staff Manager -->
+        <!-- 2. Frxchozen — Staff Manager -->
         <div class="sm-card">
           <div class="sm-avatar">
             <img src="https://minotar.net/avatar/Frxchozen/64" alt="Frxchozen" onerror="this.src='https://minotar.net/avatar/steve/64'" />
           </div>
-          <div class="sm-role"><span class="role-badge badge-manager">Manager</span></div>
+          <div class="sm-roles"><span class="role-badge badge-manager">Staff Manager</span></div>
           <div class="sm-name">Frxchozen</div>
           <div class="sm-tz">
             <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -173,12 +185,12 @@
           </div>
         </div>
 
-        <!-- Merenity — Mod -->
+        <!-- 3. Merenity — Mod -->
         <div class="sm-card">
           <div class="sm-avatar">
             <img src="https://minotar.net/avatar/Merenity/64" alt="Merenity" onerror="this.src='https://minotar.net/avatar/steve/64'" />
           </div>
-          <div class="sm-role"><span class="role-badge badge-mod">Moderator</span></div>
+          <div class="sm-roles"><span class="role-badge badge-mod">Moderator</span></div>
           <div class="sm-name">Merenity</div>
           <div class="sm-tz">
             <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -191,30 +203,12 @@
           </div>
         </div>
 
-        <!-- SiCosx — Sr. Helper -->
-        <div class="sm-card">
-          <div class="sm-avatar">
-            <img src="https://minotar.net/avatar/SiCosx_09/64" alt="SiCosx" onerror="this.src='https://minotar.net/avatar/steve/64'" />
-          </div>
-          <div class="sm-role"><span class="role-badge badge-srhelper">Sr. Helper</span></div>
-          <div class="sm-name">SiCosx</div>
-          <div class="sm-tz">
-            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            UTC+1
-          </div>
-          <div class="sm-divider"></div>
-          <div class="sm-meta">
-            <div class="sm-meta-row"><span class="sm-meta-label">Discord</span><span class="sm-meta-val">SiCosx</span></div>
-            <div class="sm-meta-row"><span class="sm-meta-label">In-Game</span><span class="sm-meta-val">SiCosx_09</span></div>
-          </div>
-        </div>
-
-        <!-- Maxx_j9 — Helper -->
+        <!-- 4. Maxx_j9 — Community Manager -->
         <div class="sm-card">
           <div class="sm-avatar">
             <img src="https://minotar.net/avatar/Maxx_j9/64" alt="Maxx_j9" onerror="this.src='https://minotar.net/avatar/steve/64'" />
           </div>
-          <div class="sm-role"><span class="role-badge badge-helper">Helper</span></div>
+          <div class="sm-roles"><span class="role-badge badge-community">Community Manager</span></div>
           <div class="sm-name">Maxx_j9</div>
           <div class="sm-tz">
             <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -227,13 +221,52 @@
           </div>
         </div>
 
-        <!-- Bob — Helper (Bedrock) -->
+        <!-- 5. SiCosx — Sr. Helper -->
+        <div class="sm-card">
+          <div class="sm-avatar">
+            <img src="https://minotar.net/avatar/SiCosx_09/64" alt="SiCosx" onerror="this.src='https://minotar.net/avatar/steve/64'" />
+          </div>
+          <div class="sm-roles"><span class="role-badge badge-srhelper">Sr. Helper</span></div>
+          <div class="sm-name">SiCosx</div>
+          <div class="sm-tz">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            UTC+1
+          </div>
+          <div class="sm-divider"></div>
+          <div class="sm-meta">
+            <div class="sm-meta-row"><span class="sm-meta-label">Discord</span><span class="sm-meta-val">SiCosx</span></div>
+            <div class="sm-meta-row"><span class="sm-meta-label">In-Game</span><span class="sm-meta-val">SiCosx_09</span></div>
+          </div>
+        </div>
+
+        <!-- 6. Mv — Helper -->
+        <div class="sm-card">
+          <div class="sm-avatar">
+            <img src="https://minotar.net/avatar/mvxq/64" alt="Mv" onerror="this.src='https://minotar.net/avatar/steve/64'" />
+          </div>
+          <div class="sm-roles"><span class="role-badge badge-helper">Helper</span></div>
+          <div class="sm-name">Mv</div>
+          <div class="sm-tz">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            GMT+2
+          </div>
+          <div class="sm-divider"></div>
+          <div class="sm-meta">
+            <div class="sm-meta-row"><span class="sm-meta-label">Discord</span><span class="sm-meta-val">m_vxq</span></div>
+            <div class="sm-meta-row"><span class="sm-meta-label">In-Game</span><span class="sm-meta-val">mvxq</span></div>
+          </div>
+        </div>
+
+        <!-- 7. Bob — Helper (LOA, Bedrock) -->
         <div class="sm-card">
           <div class="sm-avatar">
             <img src="https://minotar.net/avatar/steve/64" alt="Bob" />
             <span class="bedrock-tag">Bedrock</span>
           </div>
-          <div class="sm-role"><span class="role-badge badge-helper">Helper</span></div>
+          <div class="sm-roles">
+            <span class="role-badge badge-helper">Helper</span>
+            <span class="role-badge badge-loa">On Leave</span>
+          </div>
           <div class="sm-name">Bob</div>
           <div class="sm-tz">
             <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -246,15 +279,14 @@
           </div>
         </div>
 
-      </div>
-
-      <!-- Apply CTA -->
-      <div style="margin-top:48px;background:var(--bg-alt);border:1.5px dashed var(--border-green);border-radius:var(--radius-lg);padding:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-        <div>
-          <div style="font-weight:700;font-size:1rem;margin-bottom:4px">Interested in joining the team?</div>
-          <p style="font-size:.875rem;margin:0">We occasionally look for dedicated players to join as Helpers. Open a ticket in Discord to apply.</p>
+        <!-- 8. Join the team -->
+        <div class="sm-card-join">
+          <svg width="32" height="32" fill="none" stroke="var(--green-600)" stroke-width="1.5" viewBox="0 0 24 24" style="opacity:.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M19 8v6M22 11h-6"/></svg>
+          <div style="font-weight:700;font-size:.95rem">Join the team</div>
+          <p style="font-size:.8rem;color:var(--text-muted);margin:0;max-width:160px">Open a ticket in Discord to apply as a Helper.</p>
+          <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top:4px;font-size:.8rem;padding:8px 18px">Apply</a>
         </div>
-        <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex-shrink:0">Apply on Discord</a>
+
       </div>
     </div>
   </section>
