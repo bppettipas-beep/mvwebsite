@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MostlyVanilla</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #060b14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .card {
+      width: 1100px;
+      background: #0d1117;
+      border: 1px solid #1e2733;
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      grid-template-rows: 1fr auto;
+    }
+
+    /* ── Left ── */
+    .left {
+      padding: 52px 48px;
+      border-right: 1px solid #1e2733;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .top {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .server-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 14px;
+      image-rendering: pixelated;
+      margin-bottom: 24px;
+    }
+
+    .server-name {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #f1f5f9;
+      letter-spacing: -.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .server-name em {
+      font-style: normal;
+      color: #22c55e;
+    }
+
+    .game-type {
+      font-size: .75rem;
+      font-weight: 600;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      font-size: .9rem;
+      color: #475569;
+      line-height: 1.6;
+      max-width: 300px;
+    }
+
+    .bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #1e2733;
+    }
+
+    .ip-label {
+      font-size: .65rem;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 8px;
+    }
+
+    .ip-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    .ip-addr {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      font-family: 'Courier New', monospace;
+      letter-spacing: .02em;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: .68rem;
+      font-weight: 600;
+      color: #475569;
+      background: #131a24;
+      border: 1px solid #1e2733;
+      border-radius: 6px;
+      padding: 4px 10px;
+    }
+
+    /* ── Right ── */
+    .right {
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-label {
+      font-size: .65rem;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 24px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .feat {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #1a2030;
+      background: #0a0f1a;
+    }
+
+    .feat-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .feat-title {
+      font-size: .82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 3px;
+    }
+
+    .feat-sub {
+      font-size: .72rem;
+      color: #3d4f63;
+      line-height: 1.4;
+    }
+
+    /* ── Footer bar ── */
+    .footer {
+      grid-column: 1 / -1;
+      border-top: 1px solid #1e2733;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .footer-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-right: 28px;
+      margin-right: 28px;
+      border-right: 1px solid #1e2733;
+    }
+
+    .footer-item:last-child {
+      border-right: none;
+      padding-right: 0;
+      margin-right: 0;
+    }
+
+    .footer-key {
+      font-size: .65rem;
+      font-weight: 700;
+      color: #2d3d50;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .footer-val {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .footer-val.accent { color: #22c55e; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="top">
+      <img class="server-icon" src="../server-icon.png" alt="MostlyVanilla" />
+      <div class="server-name">Mostly<em>Vanilla</em></div>
+      <div class="game-type">Vanilla Survival · Java &amp; Bedrock</div>
+      <p class="description">A laid-back survival server where the focus is on the game. No pay-to-win, no nonsense — just Minecraft.</p>
+    </div>
+
+    <div class="bottom">
+      <div class="divider"></div>
+      <div>
+        <div class="ip-label">Server IP</div>
+        <div class="ip-row">
+          <div class="ip-dot"></div>
+          <div class="ip-addr">mostlyvanilla.net</div>
+        </div>
+      </div>
+      <div class="tags">
+        <span class="tag">1.21.1</span>
+        <span class="tag">Crossplay</span>
+        <span class="tag">No Chat Reports</span>
+        <span class="tag">Survival</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="section-label">Features</div>
+    <div class="features">
+
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-title">Crate System</div>
+          <div class="feat-sub">Daily crate rewards for all players, with better loot as you rank up</div>
+        </div>
+      </div>
+
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-title">Auction House</div>
+          <div class="feat-sub">Player-driven economy with buy &amp; sell orders</div>
+        </div>
+      </div>
+
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-title">Set Homes</div>
+          <div class="feat-sub">Save multiple locations and teleport to them instantly</div>
+        </div>
+      </div>
+
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-title">Vanilla &amp; Vanilla+</div>
+          <div class="feat-sub">Supporter ranks with extra homes, perks, and AFK shards</div>
+        </div>
+      </div>
+
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-title">AFK Zone</div>
+          <div class="feat-sub">Dedicated area to farm shards while away from keyboard</div>
+        </div>
+      </div>
+
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div>
+          <div class="feat-title">Bits Shop</div>
+          <div class="feat-sub">In-game currency shop for cosmetics and extras</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-item">
+      <span class="footer-key">Version</span>
+      <span class="footer-val accent">1.21.1</span>
+    </div>
+    <div class="footer-item">
+      <span class="footer-key">Platform</span>
+      <span class="footer-val">Java + Bedrock</span>
+    </div>
+    <div class="footer-item">
+      <span class="footer-key">Mode</span>
+      <span class="footer-val">Vanilla Survival</span>
+    </div>
+    <div class="footer-item">
+      <span class="footer-key">Discord</span>
+      <span class="footer-val">discord.gg/9JXmgugr8D</span>
+    </div>
+    <div class="footer-item">
+      <span class="footer-key">Website</span>
+      <span class="footer-val">shop.mostlyvanilla.net</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
