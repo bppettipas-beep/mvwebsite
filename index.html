@@ -4,12 +4,214 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MostlyVanilla — Survival Minecraft Server</title>
-  <meta name="description" content="No nonsense. Just Minecraft. Join MostlyVanilla — a survival community server running 1.21.1 vanilla at mostlyvanilla.net" />
+  <meta name="description" content="No nonsense. Just Minecraft. Join MostlyVanilla — a survival community server running 1.21.1 at mostlyvanilla.net" />
   <meta property="og:title" content="MostlyVanilla — Survival Minecraft Server" />
   <meta property="og:description" content="No nonsense. Just Minecraft. Join us at mostlyvanilla.net" />
   <meta property="og:image" content="server-icon.png" />
   <link rel="icon" type="image/png" href="server-icon.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Split-screen hero ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 56% 44%;
+      padding: 0;
+      background: none;
+      align-items: stretch;
+    }
+    .hero-bg-dots, .hero-bg-glow { display: none; }
+
+    .hero-dark {
+      background: #0a0f1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 80px) 72px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .hero-dark::after {
+      content: '';
+      position: absolute;
+      bottom: -120px; left: -80px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(22,163,74,.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-dark .hero-content { position: relative; z-index: 1; max-width: 560px; }
+    .hero-dark h1 { color: #fff; font-size: clamp(2.4rem, 4.2vw, 4rem); }
+    .hero-dark h1 .text-green { color: var(--green-500); }
+    .hero-dark .section-label {
+      background: rgba(34,197,94,.15);
+      color: var(--green-500);
+      border: 1px solid rgba(34,197,94,.25);
+    }
+    .hero-dark .server-status {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.1);
+    }
+    .hero-dark .status-label { color: #94a3b8; }
+    .hero-dark .hero-tagline { color: #64748b; margin-bottom: 28px; }
+    .hero-dark .hero-ip {
+      background: rgba(22,163,74,.1);
+      border-color: rgba(34,197,94,.25);
+      color: #e2e8f0;
+      margin-bottom: 28px;
+    }
+    .hero-dark .hero-ip:hover { border-color: var(--green-500); background: rgba(22,163,74,.2); }
+    .hero-dark .copy-icon { color: #64748b; }
+    .hero-dark .btn-outline { border-color: rgba(255,255,255,.18); color: #fff; }
+    .hero-dark .btn-outline:hover { border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.07); color: #fff; }
+
+    .hero-light {
+      background: #fff;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 80px) 64px 80px;
+    }
+    .hero-checklist { list-style: none; display: flex; flex-direction: column; }
+    .hero-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .hero-checklist li:last-child { border-bottom: none; }
+    .hero-check {
+      width: 26px; height: 26px;
+      background: var(--green-100);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--green-700);
+    }
+
+    @media (max-width: 940px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-dark { padding-bottom: 56px; }
+      .hero-light { border-left: none; border-top: 1px solid var(--border); padding-top: 56px; padding-bottom: 72px; }
+    }
+    @media (max-width: 600px) {
+      .hero-dark { padding-left: 24px; padding-right: 24px; }
+      .hero-light { padding-left: 24px; padding-right: 24px; }
+    }
+
+    /* ── Marquee ── */
+    .marquee-strip {
+      background: var(--green-600);
+      padding: 13px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      align-items: center;
+      animation: marquee-scroll 28s linear infinite;
+    }
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 24px;
+      padding: 0 32px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+    }
+    .marquee-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.4); flex-shrink: 0; }
+
+    /* ── Numbered feature list ── */
+    .feature-list { display: flex; flex-direction: column; }
+    .feature-row {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 36px;
+      align-items: center;
+      padding: 28px 20px;
+      border-bottom: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      margin: 0 -20px;
+      transition: border-color 160ms, background 160ms;
+    }
+    .feature-row:first-child { border-top: 1px solid var(--border); }
+    .feature-row:hover { border-left-color: var(--green-600); background: var(--green-50); }
+    .feature-num {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #cbd5e1;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+    .feature-name { font-size: .97rem; font-weight: 700; margin-bottom: 3px; }
+    .feature-desc { font-size: .855rem; color: var(--text-muted); line-height: 1.55; }
+    .feature-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    .feature-tag {
+      font-size: .7rem; font-weight: 600;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 99px; padding: 3px 10px;
+      white-space: nowrap;
+    }
+    @media (max-width: 720px) {
+      .feature-row { grid-template-columns: 40px 1fr; gap: 20px; }
+      .feature-tags { display: none; }
+    }
+    @media (max-width: 480px) {
+      .feature-row { margin: 0; padding: 22px 0; }
+    }
+
+    /* ── Dark stats section ── */
+    .dark-section { background: #0a0f1a; padding: 100px 0; }
+    .dark-section h2 { color: #fff; }
+    .dark-section p { color: #64748b; }
+    .dark-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .dark-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #1e293b;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .dark-stat {
+      background: #0a0f1a;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .dark-stat-val { font-size: 2.4rem; font-weight: 900; color: var(--green-500); letter-spacing: -.04em; line-height: 1; }
+    .dark-stat-label { font-size: .73rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #475569; margin-top: 8px; }
+    .dark-check { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+    .dark-check-item { display: flex; align-items: center; gap: 10px; font-size: .88rem; font-weight: 500; color: #94a3b8; }
+    .dark-check-item svg { color: var(--green-500); flex-shrink: 0; }
+    @media (max-width: 820px) {
+      .dark-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -23,10 +225,7 @@
         <li><a href="rules.html">Rules</a></li>
         <li><a href="store.html">Store</a></li>
       </ul>
-      <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord nav-discord-btn">
-        <svg width="16" height="13" viewBox="0 0 24 19" fill="currentColor" aria-hidden="true"><path d="M20.317 1.492A19.82 19.82 0 0 0 15.942 0c-.187.332-.402.775-.551 1.127a18.3 18.3 0 0 0-5.487 0A12.5 12.5 0 0 0 9.354 0C7.919.44 6.562 1.07 5.36 1.892 2.62 5.877 1.888 9.765 2.254 13.599a19.9 19.9 0 0 0 6.063 3.065 14.5 14.5 0 0 0 1.257-2.04 12.98 12.98 0 0 1-2.044-.985c.171-.124.339-.254.5-.388 3.945 1.808 8.219 1.808 12.115 0 .164.134.33.264.5.388a12.98 12.98 0 0 1-2.044.985c.373.72.791 1.4 1.257 2.04a19.87 19.87 0 0 0 6.063-3.065c.497-4.491-.847-8.345-3.614-11.107ZM8.52 11.266c-1.049 0-1.912-.97-1.912-2.157 0-1.188.843-2.158 1.912-2.158 1.07 0 1.932.97 1.912 2.158 0 1.187-.843 2.157-1.912 2.157Zm7.046 0c-1.049 0-1.912-.97-1.912-2.157 0-1.188.843-2.158 1.912-2.158 1.07 0 1.932.97 1.912 2.158 0 1.187-.843 2.157-1.912 2.157Z"/></svg>
-        Discord
-      </a>
+      <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord nav-discord-btn">Discord</a>
       <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>
@@ -41,240 +240,171 @@
     <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" style="color:#5865f2">Discord</a>
   </div>
 
-  <style>
-    .hero-split { display: grid; grid-template-columns: 1fr 380px; gap: 64px; align-items: center; }
-    .hero-deco { display: flex; flex-direction: column; gap: 14px; }
-    .deco-card {
-      background: rgba(255,255,255,.7);
-      border: 1.5px solid var(--border);
-      border-radius: 18px;
-      padding: 22px 24px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 32px rgba(0,0,0,.07);
-    }
-    .deco-label { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-subtle); margin-bottom: 10px; }
-    .deco-ip-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .deco-ip-badge {
-      font-size: .82rem; font-weight: 700; font-family: 'Courier New', monospace;
-      background: var(--surface); border: 1.5px solid var(--border);
-      border-radius: 8px; padding: 6px 12px; color: var(--text);
-      flex: 1;
-    }
-    .deco-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    .deco-pill {
-      font-size: .75rem; font-weight: 600;
-      background: var(--green-100); color: var(--green-700);
-      border-radius: 99px; padding: 4px 12px;
-    }
-    .deco-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .deco-stat { text-align: center; background: var(--surface); border-radius: 10px; padding: 12px 8px; }
-    .deco-stat-val { font-size: 1.3rem; font-weight: 900; color: var(--green-600); letter-spacing: -.03em; }
-    .deco-stat-name { font-size: .72rem; color: var(--text-muted); font-weight: 500; margin-top: 1px; }
-    @media (max-width: 920px) {
-      .hero-split { grid-template-columns: 1fr; }
-      .hero-deco { display: none; }
-    }
-
-    /* ── Bento features ── */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto;
-      gap: 16px;
-    }
-    .bento-wide { grid-column: span 2; }
-    .bento-full { grid-column: span 3; }
-    .bento-grid .card { height: 100%; }
-    .bento-grid .card.bento-wide h3 { font-size: 1.2rem; }
-    .bento-grid .card.bento-wide p { max-width: 480px; }
-    .card-showcase {
-      background: #0f172a;
-      color: #fff;
-      border-color: #1e293b;
-    }
-    .card-showcase .card-icon { background: rgba(22,163,74,.2); color: var(--green-500); }
-    .card-showcase h3 { color: #fff; }
-    .card-showcase p { color: #94a3b8; }
-    .card-showcase .sb-mock {
-      margin-top: 16px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: .75rem;
-      font-family: 'Courier New', monospace;
-      color: #94a3b8;
-      line-height: 1.9;
-    }
-    .sb-mock .sb-green { color: #22c55e; }
-    .sb-mock .sb-yellow { color: #fde68a; }
-    .sb-mock .sb-white { color: #fff; font-weight: 700; }
-    @media (max-width: 700px) {
-      .bento-grid { grid-template-columns: 1fr; }
-      .bento-wide, .bento-full { grid-column: span 1; }
-    }
-  </style>
-
-  <!-- HERO -->
+  <!-- HERO: split-screen -->
   <section class="hero">
-    <div class="hero-bg-dots"></div>
-    <div class="hero-bg-glow"></div>
-    <div class="container">
-      <div class="hero-split">
-        <div class="hero-content">
-          <div class="server-status hero-anim d0" id="server-status">
-            <span class="status-dot"></span>
-            <span class="status-label">Checking server…</span>
-          </div>
 
-          <span class="section-label hero-anim d1">1.21.1 · Vanilla Survival</span>
-
-          <h1 class="hero-anim d2">The Minecraft<br />server you&rsquo;ve<br /><span class="text-green">been looking for.</span></h1>
-
-          <p class="hero-tagline hero-anim d3" id="tagline"></p>
-
-          <button class="hero-ip hero-anim d4" id="ip-copy" aria-label="Copy server IP to clipboard">
-            <svg class="copy-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="9" y="9" width="13" height="13" rx="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            <span class="ip-text">mostlyvanilla.net</span>
-          </button>
-
-          <div class="hero-ctas hero-anim d5">
-            <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-lg">
-              Join Discord
-            </a>
-            <a href="index.html#features" class="btn btn-outline btn-lg">See Features</a>
-          </div>
+    <!-- Left: dark -->
+    <div class="hero-dark">
+      <div class="hero-content">
+        <div class="server-status hero-anim d0" id="server-status">
+          <span class="status-dot"></span>
+          <span class="status-label">Checking server…</span>
         </div>
 
-        <!-- Decorative right panel -->
-        <div class="hero-deco hero-anim d4">
-          <div class="deco-card">
-            <div class="deco-label">Server</div>
-            <div class="deco-ip-row">
-              <div class="deco-ip-badge">mostlyvanilla.net</div>
-            </div>
-            <div class="deco-pills">
-              <span class="deco-pill">1.21.1</span>
-              <span class="deco-pill">Vanilla Survival</span>
-              <span class="deco-pill">Economy</span>
-            </div>
-          </div>
-          <div class="deco-card">
-            <div class="deco-label">What&rsquo;s inside</div>
-            <div class="deco-stat-row">
-              <div class="deco-stat">
-                <div class="deco-stat-val">AH</div>
-                <div class="deco-stat-name">Auction House</div>
-              </div>
-              <div class="deco-stat">
-                <div class="deco-stat-val">3+</div>
-                <div class="deco-stat-name">Daily Keys</div>
-              </div>
-              <div class="deco-stat">
-                <div class="deco-stat-val">AFK</div>
-                <div class="deco-stat-name">Safe Zone</div>
-              </div>
-              <div class="deco-stat">
-                <div class="deco-stat-val">SB</div>
-                <div class="deco-stat-name">Live Scoreboard</div>
-              </div>
-            </div>
-          </div>
+        <span class="section-label hero-anim d1" style="margin-top:16px">1.21.1 · Vanilla Survival</span>
+
+        <h1 class="hero-anim d2" style="margin-top:14px">The server<br />you&rsquo;ve been<br /><span class="text-green">looking for.</span></h1>
+
+        <p class="hero-tagline hero-anim d3" id="tagline"></p>
+
+        <button class="hero-ip hero-anim d4" id="ip-copy" aria-label="Copy server IP">
+          <svg class="copy-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span class="ip-text">mostlyvanilla.net</span>
+        </button>
+
+        <div class="hero-ctas hero-anim d5">
+          <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-lg">Join Discord</a>
+          <a href="#features" class="btn btn-outline btn-lg">See Features</a>
         </div>
       </div>
     </div>
+
+    <!-- Right: light -->
+    <div class="hero-light">
+      <p style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:6px">What&rsquo;s on the server</p>
+      <div style="font-family:'Courier New',monospace;font-size:.85rem;font-weight:700;color:var(--text);letter-spacing:.02em;margin-bottom:28px;padding:10px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;display:inline-block">mostlyvanilla.net</div>
+      <ul class="hero-checklist">
+        <li>
+          <span class="hero-check"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+          Auction House &amp; Player Economy
+        </li>
+        <li>
+          <span class="hero-check"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+          Crates with Daily Keys
+        </li>
+        <li>
+          <span class="hero-check"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+          Player Homes &amp; Teleport
+        </li>
+        <li>
+          <span class="hero-check"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+          Dedicated AFK Zone
+        </li>
+        <li>
+          <span class="hero-check"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+          Community Roles &amp; Ranks
+        </li>
+        <li>
+          <span class="hero-check"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+          Live In-Game Scoreboard
+        </li>
+      </ul>
+    </div>
+
   </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">No nonsense. Just Minecraft.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Build. Explore. Survive.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Survival · Community · Vanilla<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Where every block matters.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Mostly vanilla, fully adventure.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">mostlyvanilla.net<span class="marquee-sep"></span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">No nonsense. Just Minecraft.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Build. Explore. Survive.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Survival · Community · Vanilla<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Where every block matters.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">Mostly vanilla, fully adventure.<span class="marquee-sep"></span></span>
+      <span class="marquee-item">mostlyvanilla.net<span class="marquee-sep"></span></span>
+    </div>
+  </div>
 
   <!-- FEATURES -->
-  <section class="section section-alt" id="features">
+  <section class="section" id="features">
     <div class="container">
-      <span class="section-label reveal">What we offer</span>
-      <h2 class="reveal mb-4">Everything you need,<br />nothing you don&rsquo;t.</h2>
-      <p class="reveal mb-12" style="max-width:520px">We keep it close to vanilla with just enough quality-of-life improvements to make your survival experience smoother and more rewarding.</p>
+      <span class="section-label">What we offer</span>
+      <h2 style="margin-top:12px;margin-bottom:8px">Everything you need,<br />nothing you don&rsquo;t.</h2>
+      <p style="max-width:500px;margin-bottom:52px">Close to vanilla with just enough quality-of-life improvements to make survival smoother and more rewarding.</p>
 
-      <div class="bento-grid">
+      <div class="feature-list">
 
-        <!-- AH — wide -->
-        <div class="card bento-wide reveal" data-delay="1">
-          <div class="card-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <div class="feature-row">
+          <div class="feature-num">01</div>
+          <div>
+            <div class="feature-name">Auction House</div>
+            <div class="feature-desc">A fully player-driven economy. List items, set buy orders, browse hundreds of listings — all in-game.</div>
           </div>
-          <h3>Auction House</h3>
-          <p>A fully player-driven economy. List items, set buy orders, and browse hundreds of listings — all in-game.</p>
-          <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
-            <span style="font-size:.75rem;font-weight:600;background:var(--green-100);color:var(--green-700);border-radius:99px;padding:4px 12px">Buy Orders</span>
-            <span style="font-size:.75rem;font-weight:600;background:var(--green-100);color:var(--green-700);border-radius:99px;padding:4px 12px">Listings</span>
-            <span style="font-size:.75rem;font-weight:600;background:var(--green-100);color:var(--green-700);border-radius:99px;padding:4px 12px">Trade History</span>
-          </div>
-        </div>
-
-        <!-- Crates -->
-        <div class="card reveal" data-delay="2">
-          <div class="card-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          </div>
-          <h3>Crates</h3>
-          <p>Earn keys through gameplay. Spin for rare items and exclusive rewards.</p>
-        </div>
-
-        <!-- Homes -->
-        <div class="card reveal" data-delay="3">
-          <div class="card-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-          </div>
-          <h3>Player Homes</h3>
-          <p>Set homes at your base, farm, and mine. Teleport back in seconds.</p>
-        </div>
-
-        <!-- AFK Zone -->
-        <div class="card reveal" data-delay="4">
-          <div class="card-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          </div>
-          <h3>AFK Zone</h3>
-          <p>A dedicated zone to keep your farms ticking. Your progress never stops.</p>
-        </div>
-
-        <!-- Community Roles — wide -->
-        <div class="card bento-wide reveal" data-delay="5">
-          <div class="card-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Community Roles</h3>
-          <p>Earn your rank by playing and contributing. Rise through community tiers with real, visible recognition in chat and tab list.</p>
-          <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
-            <span style="font-size:.75rem;font-weight:600;background:#f1f5f9;color:#475569;border-radius:99px;padding:4px 12px">New</span>
-            <span style="font-size:.75rem;font-weight:600;background:#f1f5f9;color:#475569;border-radius:99px;padding:4px 12px">Member</span>
-            <span style="font-size:.75rem;font-weight:600;background:var(--green-100);color:var(--green-700);border-radius:99px;padding:4px 12px">Veteran</span>
-            <span style="font-size:.75rem;font-weight:600;background:#fef9c3;color:#854d0e;border-radius:99px;padding:4px 12px">Elder</span>
+          <div class="feature-tags">
+            <span class="feature-tag">Economy</span>
+            <span class="feature-tag">Buy Orders</span>
+            <span class="feature-tag">Trade History</span>
           </div>
         </div>
 
-        <!-- Live Scoreboard — full width dark -->
-        <div class="card card-showcase bento-full reveal" data-delay="6">
-          <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
-            <div style="flex:1;min-width:200px">
-              <div class="card-icon">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
-              </div>
-              <h3>Live Scoreboard</h3>
-              <p>A real-time in-game scoreboard showing your balance, world, and ping. Always know where you stand.</p>
-            </div>
-            <div class="sb-mock" style="min-width:200px;flex:1">
-              <div class="sb-green">▬▬▬▬▬▬▬▬▬▬▬▬</div>
-              <div style="margin:4px 0">&nbsp;&nbsp;<span class="sb-green">◆ MOSTLY VANILLA</span></div>
-              <div class="sb-green">▬▬▬▬▬▬▬▬▬▬▬▬</div>
-              <div style="margin-top:6px">&nbsp;&nbsp;<span class="sb-green">Balance</span></div>
-              <div>&nbsp;&nbsp;&nbsp;<span class="sb-yellow">4,200</span>&nbsp;<span class="sb-green">Bits</span></div>
-              <div style="margin-top:4px">&nbsp;&nbsp;<span class="sb-green">World</span></div>
-              <div>&nbsp;&nbsp;&nbsp;<span class="sb-white">world</span></div>
-              <div style="margin-top:4px">&nbsp;&nbsp;<span class="sb-green">Ping</span></div>
-              <div>&nbsp;&nbsp;&nbsp;<span class="sb-white">34</span><span style="color:#64748b">ms</span></div>
-            </div>
+        <div class="feature-row">
+          <div class="feature-num">02</div>
+          <div>
+            <div class="feature-name">Crates</div>
+            <div class="feature-desc">Earn crate keys through gameplay. Spin for rare items, custom tools, and exclusive rewards.</div>
+          </div>
+          <div class="feature-tags">
+            <span class="feature-tag">Daily Keys</span>
+            <span class="feature-tag">Rare Loot</span>
+          </div>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-num">03</div>
+          <div>
+            <div class="feature-name">Player Homes</div>
+            <div class="feature-desc">Set homes at your base, your farm, your mine. Teleport back any time with a single command.</div>
+          </div>
+          <div class="feature-tags">
+            <span class="feature-tag">Teleport</span>
+            <span class="feature-tag">Multiple Homes</span>
+          </div>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-num">04</div>
+          <div>
+            <div class="feature-name">AFK Zone</div>
+            <div class="feature-desc">A dedicated zone to keep your farms ticking while you&rsquo;re away. Your progress never stops.</div>
+          </div>
+          <div class="feature-tags">
+            <span class="feature-tag">Safe Zone</span>
+            <span class="feature-tag">Farm Support</span>
+          </div>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-num">05</div>
+          <div>
+            <div class="feature-name">Community Roles</div>
+            <div class="feature-desc">Earn your rank by playing and contributing. Rise through community tiers with real, visible recognition in chat and tab list.</div>
+          </div>
+          <div class="feature-tags">
+            <span class="feature-tag">Member</span>
+            <span class="feature-tag">Veteran</span>
+            <span class="feature-tag">Elder</span>
+          </div>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-num">06</div>
+          <div>
+            <div class="feature-name">Live Scoreboard</div>
+            <div class="feature-desc">A real-time in-game scoreboard showing your balance, world, and ping. Always know where you stand.</div>
+          </div>
+          <div class="feature-tags">
+            <span class="feature-tag">Real-time</span>
+            <span class="feature-tag">Balance</span>
+            <span class="feature-tag">Ping</span>
           </div>
         </div>
 
@@ -282,45 +412,49 @@
     </div>
   </section>
 
-  <!-- WHY MOSTLYVANILLA -->
-  <section class="section">
+  <!-- WHY: dark full-bleed section -->
+  <section class="dark-section">
     <div class="container">
-      <div class="why-grid">
+      <div class="dark-grid">
         <div>
-          <span class="section-label reveal">Why MostlyVanilla</span>
-          <h2 class="reveal mb-4">Survival with economy.<br />Real community.</h2>
-          <p class="reveal mb-6">We built a tight-knit community around the game you already love — no pay-to-win, no bloat, just great gameplay with a player-driven economy and people who actually care.</p>
-          <ul class="reveal" style="list-style:none;display:flex;flex-direction:column;gap:12px">
-            <li style="display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:500">
-              <svg width="16" height="16" fill="none" stroke="var(--green-600)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+          <span class="section-label" style="background:rgba(34,197,94,.15);color:var(--green-500);border:1px solid rgba(34,197,94,.2)">Why MostlyVanilla</span>
+          <h2 style="margin-top:14px;margin-bottom:16px">Survival with economy.<br />Real community.</h2>
+          <p style="margin-bottom:0">We built a tight-knit community around the game you already love — no pay-to-win, no bloat, just great gameplay with a player-driven economy and people who actually care.</p>
+          <div class="dark-check">
+            <div class="dark-check-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
               No pay-to-win advantages
-            </li>
-            <li style="display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:500">
-              <svg width="16" height="16" fill="none" stroke="var(--green-600)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <div class="dark-check-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
               Active, friendly staff team
-            </li>
-            <li style="display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:500">
-              <svg width="16" height="16" fill="none" stroke="var(--green-600)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <div class="dark-check-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
               Player-driven economy with Auction House
-            </li>
-          </ul>
+            </div>
+            <div class="dark-check-item">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+              Close to vanilla, never bloated
+            </div>
+          </div>
         </div>
-        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-          <div style="background:var(--bg-alt);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px 20px;text-align:center">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--green-600);letter-spacing:-.03em">1.21.1</div>
-            <div style="font-size:.78rem;font-weight:600;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em">Version</div>
+        <div class="dark-stats">
+          <div class="dark-stat">
+            <div class="dark-stat-val">1.21.1</div>
+            <div class="dark-stat-label">Current Version</div>
           </div>
-          <div style="background:var(--bg-alt);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px 20px;text-align:center">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--green-600);letter-spacing:-.03em">0%</div>
-            <div style="font-size:.78rem;font-weight:600;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em">Pay-to-Win</div>
+          <div class="dark-stat">
+            <div class="dark-stat-val">0%</div>
+            <div class="dark-stat-label">Pay-to-Win</div>
           </div>
-          <div style="background:var(--bg-alt);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px 20px;text-align:center">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--green-600);letter-spacing:-.03em">AH</div>
-            <div style="font-size:.78rem;font-weight:600;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em">Economy</div>
+          <div class="dark-stat">
+            <div class="dark-stat-val">AH</div>
+            <div class="dark-stat-label">Economy</div>
           </div>
-          <div style="background:var(--bg-alt);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px 20px;text-align:center">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--green-600);letter-spacing:-.03em">Real</div>
-            <div style="font-size:.78rem;font-weight:600;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em">Community</div>
+          <div class="dark-stat">
+            <div class="dark-stat-val">Real</div>
+            <div class="dark-stat-label">Community</div>
           </div>
         </div>
       </div>
@@ -328,17 +462,14 @@
   </section>
 
   <!-- CTA -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="cta-banner reveal">
-        <h2>Ready to start playing?</h2>
-        <p>Connect at <strong style="color:#fff">mostlyvanilla.net</strong> or join the Discord first — we don&rsquo;t bite.</p>
-        <div class="cta-actions">
-          <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-lg">
-            <svg width="17" height="13" viewBox="0 0 24 19" fill="currentColor" aria-hidden="true"><path d="M20.317 1.492A19.82 19.82 0 0 0 15.942 0c-.187.332-.402.775-.551 1.127a18.3 18.3 0 0 0-5.487 0A12.5 12.5 0 0 0 9.354 0C7.919.44 6.562 1.07 5.36 1.892 2.62 5.877 1.888 9.765 2.254 13.599a19.9 19.9 0 0 0 6.063 3.065 14.5 14.5 0 0 0 1.257-2.04 12.98 12.98 0 0 1-2.044-.985c.171-.124.339-.254.5-.388 3.945 1.808 8.219 1.808 12.115 0 .164.134.33.264.5.388a12.98 12.98 0 0 1-2.044.985c.373.72.791 1.4 1.257 2.04a19.87 19.87 0 0 0 6.063-3.065c.497-4.491-.847-8.345-3.614-11.107ZM8.52 11.266c-1.049 0-1.912-.97-1.912-2.157 0-1.188.843-2.158 1.912-2.158 1.07 0 1.932.97 1.912 2.158 0 1.187-.843 2.157-1.912 2.157Zm7.046 0c-1.049 0-1.912-.97-1.912-2.157 0-1.188.843-2.158 1.912-2.158 1.07 0 1.932.97 1.912 2.158 0 1.187-.843 2.157-1.912 2.157Z"/></svg>
-            Join Discord
-          </a>
-        </div>
+  <section class="section section-alt" style="text-align:center">
+    <div class="container" style="max-width:580px">
+      <span class="section-label">Ready to play?</span>
+      <h2 style="margin-top:14px;margin-bottom:12px">Jump in today.</h2>
+      <p style="margin-bottom:32px">Connect at <strong style="color:var(--text)">mostlyvanilla.net</strong> or join the Discord first — we don&rsquo;t bite.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-lg">Join Discord</a>
+        <a href="store.html" class="btn btn-outline btn-lg">View Store</a>
       </div>
     </div>
   </section>
@@ -359,7 +490,6 @@
   <!-- FATHER'S DAY POPUP -->
   <div id="fd-backdrop" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:24px">
     <div id="fd-modal" style="background:#fff;border-radius:20px;max-width:460px;width:100%;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.2);animation:fdIn .25s cubic-bezier(.4,0,.2,1) both">
-      <!-- Header -->
       <div style="background:linear-gradient(135deg,#78350f,#92400e);padding:32px 32px 28px;text-align:center;position:relative">
         <button onclick="closeFdPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border:none;background:rgba(255,255,255,.15);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:background 160ms" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.15)'">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -368,17 +498,12 @@
         <div style="font-size:1.75rem;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.1;margin-bottom:6px">Father&rsquo;s Day Sale</div>
         <div style="font-size:3rem;font-weight:900;color:#fde68a;letter-spacing:-.03em;line-height:1">40% OFF</div>
       </div>
-      <!-- Body -->
       <div style="padding:28px 32px 32px;text-align:center">
         <p style="font-size:.95rem;color:#475569;margin-bottom:8px">Everything in the store is <strong style="color:#0f172a">40% off</strong> for a limited time.</p>
         <p style="font-size:.85rem;color:#94a3b8;margin-bottom:24px">Daily crate keys, donor ranks, and more. Thank you for supporting MostlyVanilla!</p>
         <div style="display:flex;flex-direction:column;gap:10px">
-          <a href="store.html" onclick="closeFdPopup()" style="display:block;padding:13px;background:#92400e;color:#fff;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;transition:background 180ms" onmouseover="this.style.background='#78350f'" onmouseout="this.style.background='#92400e'">
-            Shop the Sale &rarr;
-          </a>
-          <button onclick="closeFdPopup()" style="display:block;width:100%;padding:11px;background:none;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.88rem;font-weight:500;color:#94a3b8;cursor:pointer;transition:border-color 160ms,color 160ms" onmouseover="this.style.borderColor='#cbd5e1';this.style.color='#475569'" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#94a3b8'">
-            Maybe later
-          </button>
+          <a href="store.html" onclick="closeFdPopup()" style="display:block;padding:13px;background:#92400e;color:#fff;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;transition:background 180ms" onmouseover="this.style.background='#78350f'" onmouseout="this.style.background='#92400e'">Shop the Sale &rarr;</a>
+          <button onclick="closeFdPopup()" style="display:block;width:100%;padding:11px;background:none;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.88rem;font-weight:500;color:#94a3b8;cursor:pointer;transition:border-color 160ms,color 160ms" onmouseover="this.style.borderColor='#cbd5e1';this.style.color='#475569'" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#94a3b8'">Maybe later</button>
         </div>
       </div>
     </div>
@@ -397,29 +522,21 @@
       const bd = document.getElementById('fd-backdrop');
       bd.style.display = 'flex';
       document.body.style.overflow = 'hidden';
-      // reset animation
       const modal = document.getElementById('fd-modal');
       modal.style.animation = 'none';
-      modal.offsetHeight; // reflow
+      modal.offsetHeight;
       modal.style.animation = '';
     }
-
     function closeFdPopup() {
       document.getElementById('fd-backdrop').style.display = 'none';
       document.body.style.overflow = '';
     }
-
-    // close on backdrop click
     document.getElementById('fd-backdrop').addEventListener('click', function(e) {
       if (e.target === this) closeFdPopup();
     });
-
-    // close on Escape
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeFdPopup();
     });
-
-    // show after 5s, then every 2 minutes
     setTimeout(function() {
       showFdPopup();
       setInterval(showFdPopup, 120000);
