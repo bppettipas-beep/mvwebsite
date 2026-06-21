@@ -8,12 +8,64 @@
   <link rel="icon" type="image/png" href="server-icon.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* ── Sidebar layout ── */
+    .rules-layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .rules-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 28px);
+    }
+    .rules-sidebar-section {
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      padding: 0 10px;
+      margin-bottom: 4px;
+      margin-top: 20px;
+    }
+    .rules-sidebar-section:first-child { margin-top: 0; }
+    .rules-sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 9px;
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: background 150ms, color 150ms, border-color 150ms;
+      margin-bottom: 1px;
+    }
+    .rules-sidebar-link:hover { background: var(--bg-alt); color: var(--text); }
+    .rules-sidebar-link.active { color: var(--green-600); background: var(--green-100); border-left-color: var(--green-600); font-weight: 600; }
+    .rules-sidebar-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; flex-shrink: 0; opacity: .5;
+    }
+    .rules-sidebar-divider {
+      height: 1px; background: var(--border); margin: 14px 10px;
+    }
+
+    @media (max-width: 780px) {
+      .rules-layout { grid-template-columns: 1fr; }
+      .rules-sidebar { display: none; }
+    }
+
+    /* ── Rule items ── */
     .rules-section-title {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 16px;
-      margin-top: 48px;
+      margin-top: 56px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -21,15 +73,37 @@
     .rules-section-title:first-child { margin-top: 0; }
     .rules-section-title svg { color: var(--green-600); flex-shrink: 0; }
 
+    /* Section headings with decorative number */
+    .rules-chapter {
+      border-top: 2px solid var(--border);
+      padding-top: 40px;
+      margin-top: 48px;
+    }
+    .rules-chapter:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+    .rules-chapter-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green-600);
+      margin-bottom: 6px;
+    }
+    .rules-chapter h2 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      margin-bottom: 28px;
+    }
+
     .sub-rule {
       margin-top: 10px;
-      padding: 16px 20px;
+      padding: 14px 18px;
       background: var(--bg-alt);
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
     }
-    .sub-rule-title { font-weight: 700; font-size: .9rem; margin-bottom: 6px; }
-    .sub-rule p { font-size: .875rem; }
+    .sub-rule-title { font-weight: 700; font-size: .875rem; margin-bottom: 6px; }
+    .sub-rule p { font-size: .83rem; }
     .sub-rule ul {
       margin-top: 8px;
       padding-left: 18px;
@@ -37,7 +111,7 @@
       flex-direction: column;
       gap: 4px;
     }
-    .sub-rule ul li { font-size: .83rem; color: var(--text-muted); line-height: 1.55; }
+    .sub-rule ul li { font-size: .82rem; color: var(--text-muted); line-height: 1.55; }
 
     .punish-grid {
       display: grid;
@@ -45,9 +119,8 @@
       gap: 12px;
       margin-top: 10px;
     }
-    @media (max-width: 600px) { .punish-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .punish-grid { grid-template-columns: 1fr; } }
     .punish-card {
-      background: #fff;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       padding: 18px;
@@ -58,29 +131,6 @@
     .punish-warn { border-color: #fde68a; background: #fffbeb; }
     .punish-ban  { border-color: #fca5a5; background: #fff1f2; }
     .punish-perm { border-color: #f87171; background: #fee2e2; }
-
-    .tab-switcher {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 36px;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 0;
-    }
-    .tab-btn {
-      padding: 10px 20px;
-      font-size: .88rem;
-      font-weight: 600;
-      border: none;
-      background: none;
-      cursor: pointer;
-      color: var(--text-muted);
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: color 180ms, border-color 180ms;
-    }
-    .tab-btn.active { color: var(--green-600); border-bottom-color: var(--green-600); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
   </style>
 </head>
 <body>
@@ -95,10 +145,7 @@
         <li><a href="rules.html">Rules</a></li>
         <li><a href="store.html">Store</a></li>
       </ul>
-      <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord nav-discord-btn">
-        <svg width="16" height="13" viewBox="0 0 24 19" fill="currentColor" aria-hidden="true"><path d="M20.317 1.492A19.82 19.82 0 0 0 15.942 0c-.187.332-.402.775-.551 1.127a18.3 18.3 0 0 0-5.487 0A12.5 12.5 0 0 0 9.354 0C7.919.44 6.562 1.07 5.36 1.892 2.62 5.877 1.888 9.765 2.254 13.599a19.9 19.9 0 0 0 6.063 3.065 14.5 14.5 0 0 0 1.257-2.04 12.98 12.98 0 0 1-2.044-.985c.171-.124.339-.254.5-.388 3.945 1.808 8.219 1.808 12.115 0 .164.134.33.264.5.388a12.98 12.98 0 0 1-2.044.985c.373.72.791 1.4 1.257 2.04a19.87 19.87 0 0 0 6.063-3.065c.497-4.491-.847-8.345-3.614-11.107ZM8.52 11.266c-1.049 0-1.912-.97-1.912-2.157 0-1.188.843-2.158 1.912-2.158 1.07 0 1.932.97 1.912 2.158 0 1.187-.843 2.157-1.912 2.157Zm7.046 0c-1.049 0-1.912-.97-1.912-2.157 0-1.188.843-2.158 1.912-2.158 1.07 0 1.932.97 1.912 2.158 0 1.187-.843 2.157-1.912 2.157Z"/></svg>
-        Discord
-      </a>
+      <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-discord nav-discord-btn">Discord</a>
       <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>
@@ -118,293 +165,283 @@
     <div class="container">
       <div class="divider"></div>
       <h1>Server Rules</h1>
-      <p>By playing on MostlyVanilla or joining our Discord, you agree to follow these rules. Read them — they exist to protect everyone.</p>
+      <p>By playing on MostlyVanilla or joining our Discord, you agree to follow these rules.</p>
     </div>
   </section>
 
   <!-- RULES CONTENT -->
   <section class="section">
-    <div class="container" style="max-width:800px">
+    <div class="container" style="max-width:960px">
+      <div class="rules-layout">
 
-      <!-- TABS -->
-      <div class="tab-switcher reveal">
-        <button class="tab-btn active" data-tab="minecraft">
-          Minecraft Rules
-        </button>
-        <button class="tab-btn" data-tab="discord">
-          Discord Rules
-        </button>
-      </div>
+        <!-- SIDEBAR -->
+        <aside class="rules-sidebar">
+          <div class="rules-sidebar-section">Minecraft</div>
+          <a href="#mc-general"   class="rules-sidebar-link" data-anchor="mc-general">  <span class="rules-sidebar-dot"></span>General Rules</a>
+          <a href="#mc-cheating"  class="rules-sidebar-link" data-anchor="mc-cheating"> <span class="rules-sidebar-dot"></span>Cheating &amp; Exploits</a>
+          <a href="#mc-combat"    class="rules-sidebar-link" data-anchor="mc-combat">   <span class="rules-sidebar-dot"></span>Combat Rules</a>
+          <a href="#mc-punish"    class="rules-sidebar-link" data-anchor="mc-punish">   <span class="rules-sidebar-dot"></span>Punishments</a>
+          <div class="rules-sidebar-divider"></div>
+          <div class="rules-sidebar-section">Discord</div>
+          <a href="#dc-rules"     class="rules-sidebar-link" data-anchor="dc-rules">    <span class="rules-sidebar-dot"></span>Server Rules</a>
+          <a href="#dc-appeal"    class="rules-sidebar-link" data-anchor="dc-appeal">   <span class="rules-sidebar-dot"></span>Appeals</a>
+        </aside>
 
-      <!-- ── MINECRAFT RULES ── -->
-      <div class="tab-panel active" id="tab-minecraft">
+        <!-- CONTENT -->
+        <div class="rules-content">
 
-        <div class="rules-section-title reveal">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          General Rules
-        </div>
+          <!-- ── MINECRAFT ── -->
+          <div class="rules-chapter" id="mc-general">
+            <div class="rules-chapter-label">Minecraft Rules</div>
+            <h2>General Rules</h2>
 
-        <div class="rules-list">
-          <div class="rule-item reveal">
-            <div class="rule-num">1</div>
-            <div>
-              <div class="rule-title">Use Common Sense</div>
-              <div class="rule-desc">If something gives an unfair advantage, ruins gameplay for others, or is clearly unintended — don't do it. When in doubt, ask staff.</div>
-            </div>
-          </div>
-          <div class="rule-item reveal">
-            <div class="rule-num">2</div>
-            <div>
-              <div class="rule-title">Respect Everyone</div>
-              <div class="rule-desc">Excessive toxicity, harassment, targeted griefing, or intentionally trying to ruin the server experience for any player may result in punishment.</div>
-            </div>
-          </div>
-          <div class="rule-item reveal">
-            <div class="rule-num">3</div>
-            <div>
-              <div class="rule-title">Staff Decisions Are Final</div>
-              <div class="rule-desc">During active situations and events, staff decisions are final. If you believe a decision was unfair, open a Discord ticket — don't argue in chat.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rules-section-title reveal" style="margin-top:48px">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Cheating &amp; Exploits
-        </div>
-
-        <div class="rules-list">
-          <div class="rule-item reveal">
-            <div class="rule-num" style="font-size:.7rem;letter-spacing:-.02em">NO</div>
-            <div style="flex:1">
-              <div class="rule-title">No Hacking or Unfair Advantages</div>
-              <div class="rule-desc">Hacked clients, cheats, exploits, or any external programs that provide an unfair advantage are strictly prohibited.</div>
-              <div class="sub-rule">
-                <div class="sub-rule-title">Prohibited modifications include:</div>
-                <ul>
-                  <li>X-Ray or resource packs that reveal ores/structures</li>
-                  <li>ESP, tracers, radar, or player/entity location mods</li>
-                  <li>Kill aura, reach, aim assist, trigger bot, auto crystal, velocity, or movement hacks</li>
-                  <li>Fly hacks, speed hacks, timer manipulation, or no-clip</li>
-                  <li>Auto-clickers or macros that provide combat/mining advantages</li>
-                  <li>Baritone or automated pathfinding/botting software</li>
-                  <li>Freecam or spectator-style camera exploits</li>
-                </ul>
-                <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">Unsure if your mod is allowed? Ask staff before using it.</p>
+            <div class="rules-list">
+              <div class="rule-item">
+                <div class="rule-num">1</div>
+                <div>
+                  <div class="rule-title">Use Common Sense</div>
+                  <div class="rule-desc">If something gives an unfair advantage, ruins gameplay for others, or is clearly unintended — don't do it. When in doubt, ask staff.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">2</div>
+                <div>
+                  <div class="rule-title">Respect Everyone</div>
+                  <div class="rule-desc">Excessive toxicity, harassment, targeted griefing, or intentionally trying to ruin the experience for any player may result in punishment.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">3</div>
+                <div>
+                  <div class="rule-title">Staff Decisions Are Final</div>
+                  <div class="rule-desc">During active situations, staff decisions are final. If you believe a decision was unfair, open a Discord ticket — don't argue in chat.</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="rule-item reveal">
-            <div class="rule-num" style="font-size:.7rem;letter-spacing:-.02em">NO</div>
-            <div style="flex:1">
-              <div class="rule-title">No Duplication</div>
-              <div class="rule-desc">Any form of item, block, or entity duplication is prohibited — intentional or otherwise.</div>
-              <div class="sub-rule">
-                <ul>
-                  <li>Known duplication glitches</li>
-                  <li>Plugin or server exploit abuse</li>
-                  <li>Intentional lag machines used for duplication</li>
-                  <li>Attempting to crash or overload the server</li>
-                </ul>
-                <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">If you accidentally discover a dupe, report it immediately — don't abuse it.</p>
+          <div class="rules-chapter" id="mc-cheating">
+            <div class="rules-chapter-label">Minecraft Rules</div>
+            <h2>Cheating &amp; Exploits</h2>
+
+            <div class="rules-list">
+              <div class="rule-item">
+                <div class="rule-num" style="font-size:.68rem;letter-spacing:-.02em">NO</div>
+                <div style="flex:1">
+                  <div class="rule-title">No Hacking or Unfair Advantages</div>
+                  <div class="rule-desc">Hacked clients, cheats, exploits, or any external programs that provide an unfair advantage are strictly prohibited.</div>
+                  <div class="sub-rule">
+                    <div class="sub-rule-title">Prohibited modifications include:</div>
+                    <ul>
+                      <li>X-Ray or resource packs that reveal ores/structures</li>
+                      <li>ESP, tracers, radar, or player/entity location mods</li>
+                      <li>Kill aura, reach, aim assist, trigger bot, auto crystal, velocity, or movement hacks</li>
+                      <li>Fly hacks, speed hacks, timer manipulation, or no-clip</li>
+                      <li>Auto-clickers or macros that provide combat/mining advantages</li>
+                      <li>Baritone or automated pathfinding/botting software</li>
+                      <li>Freecam or spectator-style camera exploits</li>
+                    </ul>
+                    <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">Unsure if your mod is allowed? Ask staff before using it.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num" style="font-size:.68rem;letter-spacing:-.02em">NO</div>
+                <div style="flex:1">
+                  <div class="rule-title">No Duplication</div>
+                  <div class="rule-desc">Any form of item, block, or entity duplication is prohibited — intentional or otherwise.</div>
+                  <div class="sub-rule">
+                    <ul>
+                      <li>Known duplication glitches</li>
+                      <li>Plugin or server exploit abuse</li>
+                      <li>Intentional lag machines used for duplication</li>
+                      <li>Attempting to crash or overload the server</li>
+                    </ul>
+                    <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">If you accidentally discover a dupe, report it immediately — don't abuse it.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num" style="font-size:.68rem;letter-spacing:-.02em">NO</div>
+                <div style="flex:1">
+                  <div class="rule-title">No Bug Exploiting</div>
+                  <div class="rule-desc">Abusing unintended game mechanics, glitches, or server bugs for personal gain is not allowed.</div>
+                  <div class="sub-rule">
+                    <ul>
+                      <li>Glitching through blocks or protected areas</li>
+                      <li>Bypassing PvP or combat restrictions</li>
+                      <li>Using chunk bugs or rendering exploits to locate bases</li>
+                      <li>Abuse of server lag or crashes</li>
+                      <li>Any exploit staff determine to be unfair or game-breaking</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="rule-item reveal">
-            <div class="rule-num" style="font-size:.7rem;letter-spacing:-.02em">NO</div>
-            <div style="flex:1">
-              <div class="rule-title">No Bug Exploiting</div>
-              <div class="rule-desc">Abusing unintended game mechanics, glitches, or server bugs for personal gain is not allowed.</div>
-              <div class="sub-rule">
-                <ul>
-                  <li>Glitching through blocks or protected areas</li>
-                  <li>Bypassing PvP or combat restrictions</li>
-                  <li>Using chunk bugs or rendering exploits to locate bases</li>
-                  <li>Abuse of server lag or crashes</li>
-                  <li>Any exploit staff determine to be unfair or game-breaking</li>
-                </ul>
+          <div class="rules-chapter" id="mc-combat">
+            <div class="rules-chapter-label">Minecraft Rules</div>
+            <h2>Combat Rules</h2>
+
+            <div class="rules-list">
+              <div class="rule-item">
+                <div class="rule-num" style="font-size:.68rem;letter-spacing:-.02em">NO</div>
+                <div>
+                  <div class="rule-title">No Elytra in Combat</div>
+                  <div class="rule-desc">Using an elytra during active PvP combat is not permitted. Keep fights fair and on the ground.</div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rules-section-title reveal" style="margin-top:48px">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
-          Combat Rules
-        </div>
-
-        <div class="rules-list">
-          <div class="rule-item reveal">
-            <div class="rule-num" style="font-size:.7rem;letter-spacing:-.02em">NO</div>
-            <div>
-              <div class="rule-title">No Elytra in Combat</div>
-              <div class="rule-desc">Using an elytra during active PvP combat is not permitted. Keep fights fair and on the ground.</div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num" style="font-size:.7rem;letter-spacing:-.02em">NO</div>
-            <div style="flex:1">
-              <div class="rule-title">No Crystal PvP</div>
-              <div class="rule-desc">End crystals may not be used as weapons against players in any form.</div>
-              <div class="sub-rule">
-                <ul>
-                  <li>Crystal aura or automated crystal combat</li>
-                  <li>Manual crystal combat against players</li>
-                  <li>Crystal traps intended to kill players</li>
-                  <li>Using crystals during raids or fights</li>
-                </ul>
-                <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">Crystals may only be used for legitimate purposes such as respawning the Ender Dragon, unless otherwise stated by staff.</p>
+              <div class="rule-item">
+                <div class="rule-num" style="font-size:.68rem;letter-spacing:-.02em">NO</div>
+                <div style="flex:1">
+                  <div class="rule-title">No Crystal PvP</div>
+                  <div class="rule-desc">End crystals may not be used as weapons against players in any form.</div>
+                  <div class="sub-rule">
+                    <ul>
+                      <li>Crystal aura or automated crystal combat</li>
+                      <li>Manual crystal combat against players</li>
+                      <li>Crystal traps intended to kill players</li>
+                      <li>Using crystals during raids or fights</li>
+                    </ul>
+                    <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">Crystals may only be used for legitimate purposes such as respawning the Ender Dragon.</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num" style="font-size:.7rem;letter-spacing:-.02em">NO</div>
-            <div style="flex:1">
-              <div class="rule-title">No Combat Logging</div>
-              <div class="rule-desc">Logging out, disconnecting, or otherwise leaving the game to avoid death or combat is prohibited.</div>
-              <div class="sub-rule">
-                <ul>
-                  <li>Disconnecting during or immediately before a fight</li>
-                  <li>Leaving while being chased or trapped</li>
-                  <li>Using alternate accounts to avoid combat consequences</li>
-                </ul>
-                <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">If you are in combat, finish the fight before leaving the server.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rules-section-title reveal" style="margin-top:48px">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Punishments
-        </div>
-
-        <div class="reveal">
-          <div class="punish-grid">
-            <div class="punish-card punish-warn">
-              <div class="p-label">Warning</div>
-              <div class="p-desc">First offense for minor rule violations</div>
-            </div>
-            <div class="punish-card punish-ban">
-              <div class="p-label">Temporary Ban</div>
-              <div class="p-desc">Repeated or moderate violations</div>
-            </div>
-            <div class="punish-card punish-perm">
-              <div class="p-label">Permanent Ban</div>
-              <div class="p-desc">Severe offenses or repeat violations</div>
-            </div>
-          </div>
-          <p style="margin-top:16px;font-size:.875rem;color:var(--text-muted);background:var(--bg-alt);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 20px">
-            <strong style="color:var(--text)">Note:</strong> Severe offenses such as hacking, duping, or major exploit abuse may result in immediate permanent punishment without prior warning. Staff have the final say.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- ── DISCORD RULES ── -->
-      <div class="tab-panel" id="tab-discord">
-
-        <div class="rules-list">
-
-          <div class="rule-item reveal">
-            <div class="rule-num">1</div>
-            <div>
-              <div class="rule-title">Respect Others</div>
-              <div class="rule-desc">Treat all members with respect. Hate speech, racism, sexual harassment, personal attacks, threats, impersonation, targeted abuse, or trolling of any kind will not be tolerated.</div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num">2</div>
-            <div>
-              <div class="rule-title">Protect Privacy</div>
-              <div class="rule-desc">Do not share personal information — yours or anyone else's — whether publicly or privately. This includes names, addresses, phone numbers, photos, or any identifying data.</div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num">3</div>
-            <div>
-              <div class="rule-title">Sensitive Topics</div>
-              <div class="rule-desc">Avoid discussions involving controversial, dangerous, or illegal topics. This includes politics, religion, and anything that may incite conflict or discomfort within the community.</div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num">4</div>
-            <div style="flex:1">
-              <div class="rule-title">No Spam or Disruptive Behavior</div>
-              <div class="rule-desc">Spamming in any form is prohibited:</div>
-              <div class="sub-rule" style="margin-top:10px">
-                <ul>
-                  <li>Rapid messaging or flooding chat</li>
-                  <li>Excessive use of caps or emojis</li>
-                  <li>Unsolicited mentions — especially staff</li>
-                  <li>NSFW content or bypassing filters</li>
-                </ul>
+              <div class="rule-item">
+                <div class="rule-num" style="font-size:.68rem;letter-spacing:-.02em">NO</div>
+                <div style="flex:1">
+                  <div class="rule-title">No Combat Logging</div>
+                  <div class="rule-desc">Logging out or disconnecting to avoid death or combat is prohibited.</div>
+                  <div class="sub-rule">
+                    <ul>
+                      <li>Disconnecting during or immediately before a fight</li>
+                      <li>Leaving while being chased or trapped</li>
+                      <li>Using alternate accounts to avoid combat consequences</li>
+                    </ul>
+                    <p style="margin-top:10px;font-size:.82rem;color:var(--text-muted)">If you are in combat, finish the fight before leaving the server.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="rule-item reveal">
-            <div class="rule-num">5</div>
-            <div>
-              <div class="rule-title">No Advertising</div>
-              <div class="rule-desc">Advertising other Discord servers, payment links, services, or social media is not allowed without explicit permission from staff.</div>
+          <div class="rules-chapter" id="mc-punish">
+            <div class="rules-chapter-label">Minecraft Rules</div>
+            <h2>Punishments</h2>
+            <div class="punish-grid">
+              <div class="punish-card punish-warn">
+                <div class="p-label">Warning</div>
+                <div class="p-desc">First offense for minor rule violations</div>
+              </div>
+              <div class="punish-card punish-ban">
+                <div class="p-label">Temporary Ban</div>
+                <div class="p-desc">Repeated or moderate violations</div>
+              </div>
+              <div class="punish-card punish-perm">
+                <div class="p-label">Permanent Ban</div>
+                <div class="p-desc">Severe offenses or repeat violations</div>
+              </div>
+            </div>
+            <p style="margin-top:16px;font-size:.875rem;color:var(--text-muted);background:var(--bg-alt);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 20px">
+              <strong style="color:var(--text)">Note:</strong> Severe offenses such as hacking, duping, or major exploit abuse may result in immediate permanent punishment without prior warning. Staff have the final say.
+            </p>
+          </div>
+
+          <!-- ── DISCORD ── -->
+          <div class="rules-chapter" id="dc-rules">
+            <div class="rules-chapter-label">Discord Rules</div>
+            <h2>Server Rules</h2>
+
+            <div class="rules-list">
+              <div class="rule-item">
+                <div class="rule-num">1</div>
+                <div>
+                  <div class="rule-title">Respect Others</div>
+                  <div class="rule-desc">Treat all members with respect. Hate speech, racism, sexual harassment, personal attacks, threats, impersonation, or trolling of any kind will not be tolerated.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">2</div>
+                <div>
+                  <div class="rule-title">Protect Privacy</div>
+                  <div class="rule-desc">Do not share personal information — yours or anyone else's — whether publicly or privately. This includes names, addresses, phone numbers, or photos.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">3</div>
+                <div>
+                  <div class="rule-title">Sensitive Topics</div>
+                  <div class="rule-desc">Avoid discussions involving controversial, dangerous, or illegal topics including politics, religion, and anything that may incite conflict within the community.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">4</div>
+                <div style="flex:1">
+                  <div class="rule-title">No Spam or Disruptive Behavior</div>
+                  <div class="rule-desc">Spamming in any form is prohibited:</div>
+                  <div class="sub-rule" style="margin-top:10px">
+                    <ul>
+                      <li>Rapid messaging or flooding chat</li>
+                      <li>Excessive use of caps or emojis</li>
+                      <li>Unsolicited mentions — especially staff</li>
+                      <li>NSFW content or bypassing filters</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">5</div>
+                <div>
+                  <div class="rule-title">No Advertising</div>
+                  <div class="rule-desc">Advertising other Discord servers, payment links, services, or social media is not allowed without explicit permission from staff.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">6</div>
+                <div>
+                  <div class="rule-title">Use Channels Properly</div>
+                  <div class="rule-desc">Use each channel for its intended purpose. Keep all communication in English only, unless otherwise specified.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">7</div>
+                <div>
+                  <div class="rule-title">Appropriate Profiles</div>
+                  <div class="rule-desc">Your username, profile picture, and status must be appropriate for all audiences. Inappropriate content will result in action.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">8</div>
+                <div>
+                  <div class="rule-title">Punishment Evasion</div>
+                  <div class="rule-desc">Do not use alternate accounts or any other means to evade bans or mutes. Doing so will result in further and more severe action.</div>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">9</div>
+                <div>
+                  <div class="rule-title">Interacting with Staff</div>
+                  <div class="rule-desc">If you believe a staff member acted unfairly, open a ticket instead of arguing in chat. Do not ping multiple staff members unnecessarily.</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;background:var(--bg-alt);border:1.5px solid var(--border-green);border-radius:var(--radius);padding:18px 22px;font-size:.875rem;color:var(--text-muted)">
+              By being in our Discord, you also agree to <a href="https://discord.com/terms" target="_blank" rel="noopener noreferrer" style="color:var(--green-600);font-weight:600">Discord's Terms of Service</a> and <a href="https://discord.com/guidelines" target="_blank" rel="noopener noreferrer" style="color:var(--green-600);font-weight:600">Community Guidelines</a>.
             </div>
           </div>
 
-          <div class="rule-item reveal">
-            <div class="rule-num">6</div>
-            <div>
-              <div class="rule-title">Use Channels Properly</div>
-              <div class="rule-desc">Use each channel for its intended purpose. Keep all communication in English only, unless otherwise specified.</div>
-            </div>
+          <!-- Appeal -->
+          <div class="rules-chapter" id="dc-appeal">
+            <div class="rules-chapter-label">Discord</div>
+            <h2>Questions or Appeals?</h2>
+            <p style="font-size:.9rem;margin-bottom:24px">If you were banned and believe it was a mistake, or have a question about a specific rule, open a ticket in Discord and a staff member will respond promptly.</p>
+            <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open a Ticket</a>
           </div>
 
-          <div class="rule-item reveal">
-            <div class="rule-num">7</div>
-            <div>
-              <div class="rule-title">Appropriate Profiles</div>
-              <div class="rule-desc">Your username, profile picture, and status must be appropriate for all audiences. Inappropriate or offensive content will result in action.</div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num">8</div>
-            <div>
-              <div class="rule-title">Punishment Evasion</div>
-              <div class="rule-desc">Do not use alternate accounts or any other means to evade bans or mutes. Doing so will result in further and more severe action.</div>
-            </div>
-          </div>
-
-          <div class="rule-item reveal">
-            <div class="rule-num">9</div>
-            <div>
-              <div class="rule-title">Interacting with Staff</div>
-              <div class="rule-desc">If you believe a staff member acted unfairly, open a ticket instead of arguing in chat. Do not ping multiple staff members unnecessarily.</div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="reveal" style="margin-top:28px;background:var(--bg-alt);border:1.5px solid var(--border-green);border-radius:var(--radius);padding:18px 22px;font-size:.875rem;color:var(--text-muted)">
-          By being in our Discord, you also agree to <a href="https://discord.com/terms" target="_blank" rel="noopener noreferrer" style="color:var(--green-600);font-weight:600">Discord's Terms of Service</a> and <a href="https://discord.com/guidelines" target="_blank" rel="noopener noreferrer" style="color:var(--green-600);font-weight:600">Community Guidelines</a>.
-        </div>
-
-      </div>
-
-      <!-- Appeal note -->
-      <div class="reveal" style="margin-top:48px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px">
-        <h3 style="margin-bottom:8px">Questions or Appeals?</h3>
-        <p style="font-size:.9rem;margin-bottom:20px">If you were banned and believe it was a mistake, or have a question about a specific rule, open a ticket in Discord and a staff member will respond promptly.</p>
-        <a href="https://discord.gg/9JXmgugr8D" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open a Ticket</a>
-      </div>
-
+        </div><!-- /rules-content -->
+      </div><!-- /rules-layout -->
     </div>
   </section>
 
@@ -423,15 +460,20 @@
 
   <script src="script.js"></script>
   <script>
-    // Tab switcher
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    // Highlight sidebar link as user scrolls
+    const anchors = document.querySelectorAll('[id]');
+    const sidebarLinks = document.querySelectorAll('.rules-sidebar-link[data-anchor]');
+    function updateActive() {
+      let current = '';
+      anchors.forEach(el => {
+        if (el.getBoundingClientRect().top <= 120) current = el.id;
       });
-    });
+      sidebarLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.anchor === current);
+      });
+    }
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
   </script>
 </body>
 </html>

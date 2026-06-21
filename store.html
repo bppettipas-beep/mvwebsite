@@ -145,88 +145,77 @@
       <h2 style="margin-top:12px;margin-bottom:12px">Choose your rank.</h2>
       <p style="max-width:500px;margin-bottom:48px">Daily crate keys, extra homes, AFK zone perks, and a unique in-game rank. Click to purchase.</p>
 
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:860px">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:860px">
 
-        <!-- Vanilla rank -->
-        <div style="background:#fdf8ee;border:2px solid #e8dfc5;border-radius:var(--radius-lg);padding:32px;position:relative;overflow:hidden;display:flex;flex-direction:column">
-          <div style="position:absolute;top:0;right:0;width:180px;height:180px;background:radial-gradient(circle at top right,rgba(245,240,220,.8),transparent 70%);pointer-events:none"></div>
-          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#92784a;background:#f0e8d0;border-radius:99px;display:inline-block;padding:3px 12px;margin-bottom:12px">Rank</div>
-          <div style="font-size:2rem;font-weight:900;color:#7a6035;letter-spacing:-.03em;margin-bottom:4px">Vanilla</div>
-          <!-- Price -->
-          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:20px">
-            <span style="font-size:1.6rem;font-weight:900;color:#3d2e10">$12</span>
-            <span style="font-size:.85rem;color:#b09060;text-decoration:line-through">$20</span>
-            <span style="font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
+        <!-- Vanilla+ — featured full-width horizontal card -->
+        <div style="background:linear-gradient(120deg,#fdf8ee 0%,#f0fdf4 50%,#dcfce7 100%);border:2px solid #86efac;border-radius:var(--radius-lg);padding:36px 40px;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(34,197,94,.13),transparent 60%);pointer-events:none"></div>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative">
+            <!-- Left -->
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                <span style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-700);background:var(--green-100);border-radius:99px;padding:3px 12px">Premium</span>
+                <span style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--green-600);border-radius:99px;padding:3px 12px">Best Value</span>
+              </div>
+              <div style="font-size:2.4rem;font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:6px;background:linear-gradient(135deg,#7a6035,#16a34a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Vanilla+</div>
+              <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:20px">
+                <span style="font-size:1.5rem;font-weight:900;color:#0f172a">$15</span>
+                <span style="font-size:.85rem;color:var(--text-subtle);text-decoration:line-through">$25</span>
+                <span style="font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 20px">
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#0f172a;font-weight:600">Netherite Key &times;1 daily</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#0f172a;font-weight:600">Diamond Keys &times;3 daily</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#0f172a;font-weight:600">5 AFK Zone Shards</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#0f172a;font-weight:600">8 Extra Home Slots</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#0f172a;font-weight:600">Exclusive In-Game Rank</span></div>
+              </div>
+            </div>
+            <!-- Right: CTA -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;min-width:160px">
+              <button onclick="openModal('vanilla+')" style="display:inline-flex;align-items:center;justify-content:center;width:100%;padding:14px 24px;background:var(--green-600);color:#fff;border:none;border-radius:var(--radius);font-size:.95rem;font-weight:700;cursor:pointer;transition:background 180ms,transform 180ms,box-shadow 180ms;white-space:nowrap" onmouseover="this.style.background='#15803d';this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-green)'" onmouseout="this.style.background='var(--green-600)';this.style.transform='';this.style.boxShadow=''">
+                Purchase &rarr;
+              </button>
+              <span style="font-size:.74rem;color:var(--text-subtle);text-align:center">Perks refresh every 24h</span>
+            </div>
           </div>
-          <!-- Perks -->
-          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1">
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">Daily Diamond Key &times;1</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">Daily Iron Keys &times;3</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">3 Extra Home Slots</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#3d2e10;font-weight:600">Exclusive In-Game Rank &amp; Tag</span>
-            </div>
-          </div>
-          <div style="font-size:.75rem;color:#b09060;margin-bottom:14px">Keys &amp; perks refresh every 24 hours</div>
-          <button onclick="openModal('vanilla')" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 22px;background:#7a6035;color:#fff;border:none;border-radius:var(--radius);font-size:.9rem;font-weight:700;cursor:pointer;transition:background 180ms,transform 180ms" onmouseover="this.style.background='#5c4827';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#7a6035';this.style.transform=''">
-            Purchase Vanilla &rarr;
-          </button>
         </div>
 
-        <!-- Vanilla+ rank -->
-        <div style="background:linear-gradient(145deg,#fdf8ee 0%,#f0fdf4 55%,#dcfce7 100%);border:2px solid #86efac;border-radius:var(--radius-lg);padding:32px;position:relative;overflow:hidden;display:flex;flex-direction:column">
-          <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(circle at top right,rgba(34,197,94,.14),transparent 70%);pointer-events:none"></div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-            <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-700);background:var(--green-100);border-radius:99px;display:inline-block;padding:3px 12px">Rank</div>
-            <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--green-600);border-radius:99px;display:inline-block;padding:3px 12px">Best Value</div>
-          </div>
-          <div style="font-size:2rem;font-weight:900;letter-spacing:-.03em;margin-bottom:4px;background:linear-gradient(135deg,#7a6035,#16a34a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Vanilla+</div>
-          <!-- Price -->
-          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:20px">
-            <span style="font-size:1.6rem;font-weight:900;color:#0f172a">$15</span>
-            <span style="font-size:.85rem;color:var(--text-subtle);text-decoration:line-through">$25</span>
-            <span style="font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
-          </div>
-          <!-- Perks -->
-          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1">
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#0f172a;font-weight:600">Daily Netherite Key &times;1</span>
+        <!-- Vanilla — smaller secondary card -->
+        <div style="background:#fdf8ee;border:2px solid #e8dfc5;border-radius:var(--radius-lg);padding:28px 40px;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(245,240,220,.6),transparent 60%);pointer-events:none"></div>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative">
+            <!-- Left -->
+            <div>
+              <div style="margin-bottom:8px">
+                <span style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#92784a;background:#f0e8d0;border-radius:99px;padding:3px 12px">Starter</span>
+              </div>
+              <div style="font-size:1.8rem;font-weight:900;color:#7a6035;letter-spacing:-.03em;margin-bottom:4px">Vanilla</div>
+              <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px">
+                <span style="font-size:1.3rem;font-weight:900;color:#3d2e10">$12</span>
+                <span style="font-size:.82rem;color:#b09060;text-decoration:line-through">$20</span>
+                <span style="font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px 20px">
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#3d2e10;font-weight:600">Diamond Key &times;1 daily</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#3d2e10;font-weight:600">Iron Keys &times;3 daily</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#3d2e10;font-weight:600">3 Extra Home Slots</span></div>
+                <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" fill="none" stroke="#7a6035" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg><span style="font-size:.85rem;color:#3d2e10;font-weight:600">Exclusive In-Game Rank</span></div>
+              </div>
             </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#0f172a;font-weight:600">Daily Diamond Keys &times;3</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#0f172a;font-weight:600">5 AFK Zone Shards per session</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#0f172a;font-weight:600">8 Extra Home Slots</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="16" height="16" fill="none" stroke="var(--green-700)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0"><polyline points="20,6 9,17 4,12"/></svg>
-              <span style="font-size:.875rem;color:#0f172a;font-weight:600">Exclusive In-Game Rank &amp; Tag</span>
+            <!-- Right: CTA -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;min-width:160px">
+              <button onclick="openModal('vanilla')" style="display:inline-flex;align-items:center;justify-content:center;width:100%;padding:12px 24px;background:#7a6035;color:#fff;border:none;border-radius:var(--radius);font-size:.9rem;font-weight:700;cursor:pointer;transition:background 180ms,transform 180ms;white-space:nowrap" onmouseover="this.style.background='#5c4827';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#7a6035';this.style.transform=''">
+                Purchase &rarr;
+              </button>
+              <span style="font-size:.74rem;color:#b09060;text-align:center">Perks refresh every 24h</span>
             </div>
           </div>
-          <div style="font-size:.75rem;color:var(--text-subtle);margin-bottom:14px">Keys &amp; perks refresh every 24 hours</div>
-          <button onclick="openModal('vanilla+')" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 22px;background:var(--green-600);color:#fff;border:none;border-radius:var(--radius);font-size:.9rem;font-weight:700;cursor:pointer;transition:background 180ms,transform 180ms,box-shadow 180ms" onmouseover="this.style.background='#15803d';this.style.transform='translateY(-1px)';this.style.boxShadow='var(--shadow-green)'" onmouseout="this.style.background='var(--green-600)';this.style.transform='';this.style.boxShadow=''">
-            Purchase Vanilla+ &rarr;
-          </button>
         </div>
 
       </div>
+
+      <p style="font-size:.82rem;color:var(--text-subtle);margin-top:6px">All rank prices are in USD. Keys delivered automatically after purchase.</p>
     </div>
   </section>
 
