@@ -489,60 +489,6 @@
     </div>
   </footer>
 
-  <!-- FATHER'S DAY POPUP -->
-  <div id="fd-backdrop" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:24px">
-    <div id="fd-modal" style="background:#fff;border-radius:20px;max-width:460px;width:100%;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.2);animation:fdIn .25s cubic-bezier(.4,0,.2,1) both">
-      <div style="background:linear-gradient(135deg,#78350f,#92400e);padding:32px 32px 28px;text-align:center;position:relative">
-        <button onclick="closeFdPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border:none;background:rgba(255,255,255,.15);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:background 160ms" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.15)'">
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div style="display:inline-block;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.28);border-radius:99px;padding:3px 14px;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fde68a;margin-bottom:10px">Limited Time</div>
-        <div style="font-size:1.75rem;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.1;margin-bottom:6px">Father&rsquo;s Day Sale</div>
-        <div style="font-size:3rem;font-weight:900;color:#fde68a;letter-spacing:-.03em;line-height:1">40% OFF</div>
-      </div>
-      <div style="padding:28px 32px 32px;text-align:center">
-        <p style="font-size:.95rem;color:#475569;margin-bottom:8px">Everything in the store is <strong style="color:#0f172a">40% off</strong> for a limited time.</p>
-        <p style="font-size:.85rem;color:#94a3b8;margin-bottom:24px">Daily crate keys, donor ranks, and more. Thank you for supporting MostlyVanilla!</p>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <a href="store.html" onclick="closeFdPopup()" style="display:block;padding:13px;background:#92400e;color:#fff;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;transition:background 180ms" onmouseover="this.style.background='#78350f'" onmouseout="this.style.background='#92400e'">Shop the Sale &rarr;</a>
-          <button onclick="closeFdPopup()" style="display:block;width:100%;padding:11px;background:none;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.88rem;font-weight:500;color:#94a3b8;cursor:pointer;transition:border-color 160ms,color 160ms" onmouseover="this.style.borderColor='#cbd5e1';this.style.color='#475569'" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#94a3b8'">Maybe later</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <style>
-    @keyframes fdIn {
-      from { opacity: 0; transform: scale(.94) translateY(10px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-  </style>
-
   <script src="script.js"></script>
-  <script>
-    function showFdPopup() {
-      const bd = document.getElementById('fd-backdrop');
-      bd.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      const modal = document.getElementById('fd-modal');
-      modal.style.animation = 'none';
-      modal.offsetHeight;
-      modal.style.animation = '';
-    }
-    function closeFdPopup() {
-      document.getElementById('fd-backdrop').style.display = 'none';
-      document.body.style.overflow = '';
-    }
-    document.getElementById('fd-backdrop').addEventListener('click', function(e) {
-      if (e.target === this) closeFdPopup();
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeFdPopup();
-    });
-    setTimeout(function() {
-      showFdPopup();
-      setInterval(showFdPopup, 120000);
-    }, 5000);
-  </script>
 </body>
 </html>
