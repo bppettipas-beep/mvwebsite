@@ -156,8 +156,6 @@
               <div style="font-size:2.4rem;font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:6px;background:linear-gradient(135deg,#7a6035,#16a34a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Vanilla+</div>
               <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:20px;flex-wrap:wrap">
                 <span style="font-size:1.5rem;font-weight:900;color:#0f172a">$15</span>
-                <span style="font-size:.85rem;color:var(--text-subtle);text-decoration:line-through">$25</span>
-                <span style="font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
                 <span style="font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#e0f2fe;color:#0369a1;border-radius:99px;padding:2px 8px">1 Month</span>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 20px">
@@ -190,8 +188,6 @@
               <div style="font-size:1.8rem;font-weight:900;color:#7a6035;letter-spacing:-.03em;margin-bottom:4px">Vanilla</div>
               <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px;flex-wrap:wrap">
                 <span style="font-size:1.3rem;font-weight:900;color:#3d2e10">$12</span>
-                <span style="font-size:.82rem;color:#b09060;text-decoration:line-through">$20</span>
-                <span style="font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#92400e;color:#fde68a;border-radius:99px;padding:2px 8px">40% OFF</span>
                 <span style="font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#e0f2fe;color:#0369a1;border-radius:99px;padding:2px 8px">1 Month</span>
               </div>
               <div style="display:flex;flex-wrap:wrap;gap:8px 20px">
@@ -222,50 +218,44 @@
     <div class="container">
       <span class="section-label">In-Game Currency</span>
       <h2 style="margin-top:12px;margin-bottom:12px">Buy Bits.</h2>
-      <p style="max-width:500px;margin-bottom:48px">Bits are the server&rsquo;s in-game currency. Use them on the Auction House, trading, and more. Prices shown include the 40% sale discount.</p>
+      <p style="max-width:500px;margin-bottom:48px">Bits are the server&rsquo;s in-game currency. Use them on the Auction House, trading, and more.</p>
 
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:860px">
 
         <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
           <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">100 Bits</div>
-          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$0.60</div>
-          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$1.00</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:16px">$1.00</div>
           <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
         </div>
 
         <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
           <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">500 Bits</div>
-          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$2.40</div>
-          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$4.00</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:16px">$4.00</div>
           <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
         </div>
 
         <div style="background:#fff;border:2px solid var(--green-500);border-radius:var(--radius-lg);padding:22px 20px;position:relative;box-shadow:var(--shadow-green);transition:box-shadow 200ms,transform 200ms" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
           <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--green-600);color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 12px;border-radius:99px;white-space:nowrap">Most Popular</div>
           <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">1,000 Bits</div>
-          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$4.80</div>
-          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$8.00</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:16px">$8.00</div>
           <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
         </div>
 
         <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
           <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">2,000 Bits</div>
-          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$9.00</div>
-          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$15.00</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:16px">$15.00</div>
           <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
         </div>
 
         <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
           <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">5,000 Bits</div>
-          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$24.00</div>
-          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$40.00</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:16px">$40.00</div>
           <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
         </div>
 
         <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;transition:border-color 200ms,box-shadow 200ms,transform 200ms" onmouseover="this.style.borderColor='var(--border-green)';this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='';this.style.transform=''">
           <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:2px">10,000 Bits</div>
-          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:2px">$45.00</div>
-          <div style="font-size:.78rem;color:var(--text-subtle);text-decoration:line-through;margin-bottom:16px">$75.00</div>
+          <div style="font-size:1.4rem;font-weight:900;color:var(--green-600);margin-bottom:16px">$75.00</div>
           <button onclick="openModal('bits')" style="width:100%;padding:9px;background:var(--green-600);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background 160ms" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='var(--green-600)'">Buy &rarr;</button>
         </div>
 
